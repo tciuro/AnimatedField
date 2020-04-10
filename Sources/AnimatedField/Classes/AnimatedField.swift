@@ -150,6 +150,13 @@ open class AnimatedField: UIView {
     public var lowercased = false
     
     /// Keyboard type
+    public var getTextField: UITextField {
+        get {
+            return textField
+        }
+    }
+
+    /// Keyboard type
     public var keyboardType = UIKeyboardType.alphabet {
         didSet { textField.keyboardType = keyboardType }
     }
@@ -243,7 +250,7 @@ open class AnimatedField: UIView {
     }
     
     private func commonInit() {
-        _ = fromNib()
+        _ = fromNib(named: String(describing: AnimatedField.self), bundle: Bundle.main)
         setupView()
         setupTextField()
         setupTextView()

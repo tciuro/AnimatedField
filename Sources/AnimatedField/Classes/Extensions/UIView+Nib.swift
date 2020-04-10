@@ -10,6 +10,17 @@ import UIKit
 
 extension UIView {
     
+    func fromNib<T : UIView>(named nibName: String, bundle: Bundle) -> T? {
+        guard let contentView = bundle.loadNibNamed(nibName, owner: self, options: nil)?.first as? T else {
+            // xib not loaded, or its top view is of the wrong type
+            return nil
+        }
+        self.addSubview(contentView)
+        contentView.translatesAutoresizingMaskIntoConstraints = false
+        contentView.fixConstraintsInView(self)
+        return contentView
+    }
+    
     func fromNib<T : UIView>() -> T? {
         guard let contentView = Bundle(for: type(of: self)).loadNibNamed(String(describing: type(of: self)), owner: self, options: nil)?.first as? T else {
             // xib not loaded, or its top view is of the wrong type
